@@ -195,7 +195,6 @@ var t = 0;
             for (var i = 0; i < game.speak.dataArray.length; i++)
                 if (game.speak.dataArray[i] > 127)
                     times++;
-                location.hash = "#times:" + times;
             if (times > 10) game.event = "speak";
             game.actionCorrent(true);
         }, 100);
