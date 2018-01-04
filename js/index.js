@@ -51,6 +51,7 @@ var square = document.getElementById("square"),
                 }
             } else
                 square.style.color = pre ? "white" : "";
+            if (!pre) game.event = "";
             return result;
         },
         touch: {
@@ -71,8 +72,9 @@ var square = document.getElementById("square"),
             do {
                 name = Math.floor(Math.random() * actions.name.length);
                 type = Math.floor(Math.random() * actions.type[name].length);
+                name = 3; type = 0;
                 actionId = name + "/" + type;
-            } while (beforeActionId == actionId);
+            } while (beforeActionId == actionId && false);
             console.log(actionId)
             game.beforeActionId = actionId;
             actionName.innerHTML = actions.name[name];
@@ -193,9 +195,10 @@ var t = 0;
             var times = 0;
             game.speak.analyser.getByteFrequencyData(game.speak.dataArray);
             for (var i = 0; i < game.speak.dataArray.length; i++)
-                if (game.speak.dataArray[i] > 190)
+                if (game.speak.dataArray[i] > 127)
                     times++;
-            if (times > 5) game.event = "speak";
+                location.hash = "#times:" + times;
+            if (times > 10) game.event = "speak";
             game.actionCorrent(true);
         }, 100);
     }, function () {
