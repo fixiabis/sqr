@@ -12,7 +12,7 @@ var square = document.getElementById("square"),
                 "shake"
             ],
             type: [
-                ["", "2 finger", "3 finger"],
+                ["", "2 fingers", "3 fingers"],
                 ["↑", "↓", "←", "→", "↖", "↗", "↙", "↘"],
                 [""]
             ],
