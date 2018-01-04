@@ -1,0 +1,15 @@
+{
+	"name": "sqr",
+	"short_name": "sqr",
+	"icons": [
+		{
+			"src": "img/icon.png",
+			"sizes": "204x204",
+			"type": "image/png"
+		}
+	],
+	"start_url": "/index.html",
+	"display": "standalone",
+	"background_color": "#3E4EB8",
+	"theme_color": "#2F3BA2"
+}
