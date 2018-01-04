@@ -74,7 +74,6 @@ var square = document.getElementById("square"),
                 type = Math.floor(Math.random() * actions.type[name].length);
                 actionId = name + "/" + type;
             } while (beforeActionId == actionId);
-            console.log(actionId)
             game.beforeActionId = actionId;
             actionName.innerHTML = actions.name[name];
             actionType.innerHTML = actions.type[name][type];
