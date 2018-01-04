@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'Open Sans';
+    src: url(OpenSans-Light.ttf);
+}
+* {
+    font-family: 'Open Sans';
+}
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+#square {
+    font-size: 20px;
+    text-align: center;
+    width: 200px;
+    height: 200px;
+    position: relative;
+        top: calc(50% - 100px);
+        left: calc(50% - 100px);
+    border-width: 1px;
+    border-style: solid;
+    transition: all 1s;
+}
+#score {
+    font-size: 50px;
+    line-height: 200px;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#action-name, #action-type {
+    line-height: 50px;
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    top: 150px;
+    left: 0px;
+}
+#action-name {
+    top: 0px;
+}
