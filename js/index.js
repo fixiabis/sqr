@@ -9,11 +9,13 @@ var square = document.getElementById("square"),
             name: [
                 "tap",
                 "swipe",
-                "shake"
+                "shake",
+                "speak"
             ],
             type: [
-                ["", "2 fingers", "3 fingers"],
+                ["", "use 2 fingers", "use 3 fingers"],
                 ["↑", "↓", "←", "→", "↖", "↗", "↙", "↘"],
+                [""],
                 [""]
             ],
             event: [
@@ -22,11 +24,12 @@ var square = document.getElementById("square"),
                     "swipeUp", "swipeDown", "swipeLeft", "swipeRight",
                     "swipeUpLeft", "swipeUpRight", "swipeDownLeft", "swipeDownRight"
                 ],
-                ["shake"]
+                ["shake"],
+                ["speak"]
             ]
         },
         actionCorrent: function (pre) {
-            if (!game.started) return;
+            if (!game.started || game.beforeActionId == "-1/-1") return;
             var beforeActionId = game.beforeActionId.split("/"),
                 name = beforeActionId[0],
                 type = beforeActionId[1],
@@ -60,6 +63,7 @@ var square = document.getElementById("square"),
             end: { x: 0, y: 0, z: 0 },
             init: false
         },
+        speak: {},
         start: function () {
             var actions = game.actions,
                 beforeActionId = game.beforeActionId,
@@ -69,6 +73,7 @@ var square = document.getElementById("square"),
                 type = Math.floor(Math.random() * actions.type[name].length);
                 actionId = name + "/" + type;
             } while (beforeActionId == actionId);
+            console.log(actionId)
             game.beforeActionId = actionId;
             actionName.innerHTML = actions.name[name];
             actionType.innerHTML = actions.type[name][type];
@@ -146,6 +151,7 @@ window.addEventListener("devicemotion", function (event) {
 });
 square.addEventListener("click", function () {
     if (game.started) return;
+    game.started = true;
     actionName.innerHTML = "ready?";
     actionName.style.lineHeight = "50px";
     actionName.style.fontSize = "20px";
@@ -161,8 +167,7 @@ square.addEventListener("click", function () {
                     score.innerHTML = score.innerHTML * 1 + 1;
                     game.start();
                 }
-            }, 1500);
-            game.started = true;
+            }, 2000);
             game.start();
         },
         timerId = setInterval(function () {
@@ -174,3 +179,26 @@ square.addEventListener("click", function () {
             count--;
         }, 1000);
 });
+var t = 0;
+(function () {
+    game.speak.audioContext = new AudioContext();
+    game.speak.dataArray = new Uint8Array(256);
+    navigator.getUserMedia({ audio: true }, function (stream) {
+        var context = game.speak.audioContext;
+        game.speak.microphone = context.createMediaStreamSource(stream);
+        game.speak.analyser = context.createAnalyser();
+        game.speak.microphone.connect(game.speak.analyser);
+        game.speak.analyser.fftSize = 256;
+        setInterval(function () {
+            var times = 0;
+            game.speak.analyser.getByteFrequencyData(game.speak.dataArray);
+            for (var i = 0; i < game.speak.dataArray.length; i++)
+                if (game.speak.dataArray[i] > 190)
+                    times++;
+            if (times > 5) game.event = "speak";
+            game.actionCorrent(true);
+        }, 100);
+    }, function () {
+        game.actions.pop();
+    });
+})();
