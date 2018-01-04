@@ -26,11 +26,12 @@ var square = document.getElementById("square"),
             ]
         },
         actionCorrent: function () {
+            if (!game.started) return;
             var beforeActionId = game.beforeActionId.split("/"),
                 name = beforeActionId[0],
                 type = beforeActionId[1],
                 result = game.event == game.actions.event[name][type];
-            if (!result && game.started) {
+            if (!result) {
                 square.style.backgroundColor = "black";
                 square.style.color = "white";
                 actionName.innerHTML = "again?";
@@ -85,6 +86,7 @@ window.addEventListener("touchmove", function (event) {
 window.addEventListener("touchend", function (event) {
     var touch = game.touch;
     if (touch.end.x == 0 && touch.end.y == 0) {
+        console.log(touch.point);
         game.event = "touch" + (touch.point > 1 ? touch.point : "");
     } else {
         var swipeVector = {
