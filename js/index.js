@@ -13,10 +13,7 @@ var square = document.getElementById("square"),
             ],
             type: [
                 ["", "2 finger", "3 finger"],
-                [
-                    "↑", "↓", "←", "→",
-                    "↖", "↗", "↙", "↘"
-                ],
+                ["↑", "↓", "←", "→", "↖", "↗", "↙", "↘"],
                 [""]
             ],
             event: [
