@@ -25,20 +25,29 @@ var square = document.getElementById("square"),
                 ["shake"]
             ]
         },
-        actionCorrent: function () {
+        actionCorrent: function (pre) {
             if (!game.started) return;
             var beforeActionId = game.beforeActionId.split("/"),
                 name = beforeActionId[0],
                 type = beforeActionId[1],
                 result = game.event == game.actions.event[name][type];
             if (!result) {
-                square.style.backgroundColor = "black";
-                square.style.color = "white";
-                actionName.innerHTML = "again?";
-                actionType.innerHTML = "";
-                clearInterval(game.timerId);
-                game.started = false;
-            }
+                if (!pre) {
+                    square.style.backgroundColor = "";
+                    square.style.color = "";
+                    square.style.color = "white";
+                    square.style.backgroundColor = "black";
+                    score.innerHTML = "";
+                    actionName.innerHTML = "again?";
+                    actionName.style.lineHeight = "";
+                    actionName.style.fontSize = "";
+                    actionName.style.height = "";
+                    actionType.innerHTML = "";
+                    clearInterval(game.timerId);
+                    game.started = false;
+                }
+            } else
+                square.style.color = pre ? "white" : "";
             return result;
         },
         touch: {
@@ -86,7 +95,6 @@ window.addEventListener("touchmove", function (event) {
 window.addEventListener("touchend", function (event) {
     var touch = game.touch;
     if (touch.end.x == 0 && touch.end.y == 0) {
-        console.log(touch.point);
         game.event = "touch" + (touch.point > 1 ? touch.point : "");
     } else {
         var swipeVector = {
@@ -109,7 +117,7 @@ window.addEventListener("touchend", function (event) {
                 (swipeVector.x > 0 ? "Right" : "Left")
             );
     }
-    game.actionCorrent();
+    game.actionCorrent(true);
 });
 window.addEventListener("devicemotion", function (event) {
     var accel = event.accelerationIncludingGravity,
@@ -129,7 +137,7 @@ window.addEventListener("devicemotion", function (event) {
     if (shakeForce.x > 4 || shakeForce.y > 4 || shakeForce > 4)
         if (shake.init) {
             game.event = "shake";
-            game.actionCorrent();
+            game.actionCorrent(true);
         } else
             shake.init = true;
     shake.end.x = accel.x;
@@ -138,16 +146,30 @@ window.addEventListener("devicemotion", function (event) {
 });
 square.addEventListener("click", function () {
     if (game.started) return;
-    game.timerId = setInterval(function () {
-        var actionCorrent = game.actionCorrent();
-        if (actionCorrent) {
-            score.innerHTML = score.innerHTML * 1 + 1;
-            game.start();
-        }
-    }, 2000);
+    actionName.innerHTML = "ready?";
+    actionName.style.lineHeight = "50px";
+    actionName.style.fontSize = "20px";
+    actionName.style.height = "50px";
     square.style.backgroundColor = "";
     square.style.color = "";
-    score.innerHTML = "0";
-    game.started = true;
-    game.start();
+    var count = 3,
+        startGame = function () {
+            game.timerId = setInterval(function () {
+                var actionCorrent = game.actionCorrent();
+                if (actionCorrent) {
+                    score.innerHTML = score.innerHTML * 1 + 1;
+                    game.start();
+                }
+            }, 1500);
+            game.started = true;
+            game.start();
+        },
+        timerId = setInterval(function () {
+            if (count == 0) {
+                clearTimeout(timerId);
+                startGame();
+            }
+            score.innerHTML = count;
+            count--;
+        }, 1000);
 });
