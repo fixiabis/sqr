@@ -37,12 +37,12 @@ var square = document.getElementById("square"),
                     square.style.color = "";
                     square.style.color = "white";
                     square.style.backgroundColor = "black";
-                    score.innerHTML = "";
                     actionName.innerHTML = "again?";
                     actionName.style.lineHeight = "";
                     actionName.style.fontSize = "";
                     actionName.style.height = "";
-                    actionType.innerHTML = "";
+                    actionType.innerHTML = "score:" + score.innerHTML;
+                    score.innerHTML = "";
                     clearInterval(game.timerId);
                     game.started = false;
                 }
@@ -150,6 +150,7 @@ square.addEventListener("click", function () {
     actionName.style.lineHeight = "50px";
     actionName.style.fontSize = "20px";
     actionName.style.height = "50px";
+    actionType.innerHTML = "";
     square.style.backgroundColor = "";
     square.style.color = "";
     var count = 3,
