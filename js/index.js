@@ -59,7 +59,7 @@ var square = document.getElementById("square"),
             } else {
                 if (gameEvent == nowActionsEvent) {
                     game.beforeActionEvent = gameEvent;
-                    eventStatus.innerHTML = 
+                    eventStatus.innerHTML =
                         game.actions.name[name] + " " + game.actions.type[name][type];
                 }
                 square.style.color = pre ? "lightgray" : "";
@@ -214,18 +214,21 @@ square.addEventListener("click", function () {
         }
         setInterval(function () {
             var normalCount = 0,
+                louderCount = 0,
                 sounds = document.querySelectorAll("#sound div");
             game.speak.analyser.getByteFrequencyData(game.speak.dataArray);
             for (var i = 0; i < game.speak.dataArray.length; i++) {
                 if (i < game.speak.dataArray.length / 2)
                     sounds[i].style.height = game.speak.dataArray[i] + 1 + "px";
-                if (game.speak.dataArray[i] > 63)
-                    normalCount++;
+                normalCount += game.speak.dataArray[i] > 63 ? 1 : 0;
+                louderCount += game.speak.dataArray[i] > 127 ? 1 : 0;
             }
-            if (normalCount > 10)
-                game.event = "speak";
-            else
-                game.event = "speakLouder"
+            game.event =
+                normalCount > 10 ?
+                    "speak"
+                    : louderCount > 10 ?
+                        "speakLouder"
+                        : game.event;
             game.actionCorrent(true);
         }, 100);
     }, function () {
