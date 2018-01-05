@@ -160,7 +160,12 @@ window.addEventListener("devicemotion", function (event) {
         isShake = shakeForce.x > 4 || shakeForce.y > 4 || shakeForce.z > 4,
         isShakeHarder = shakeForce.x > 8 || shakeForce.y > 8 || shakeForce.z > 8;
     if (shake.init) {
-        game.event = isShakeHarder ? "shakeHarder" : isShake ? "shake" : game.event;
+        game.event =
+            isShakeHarder ?
+                "shakeHarder"
+                : isShake ?
+                    "shake"
+                    : game.event;
         game.actionCorrent(true);
     } else
         shake.init = true;
@@ -200,6 +205,7 @@ square.addEventListener("click", function () {
             count--;
         }, 1000);
 });
+timeRemain.style.width = "0%";
 (function () {
     var size = 256;
     game.speak.audioContext = new AudioContext();
