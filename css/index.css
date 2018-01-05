@@ -60,7 +60,7 @@ html, body {
     transform: rotateX(180deg);
 }
 #sound div {
-    background: #222;
+    background: lightgray;
     float: left;
 }
 #event-status {
@@ -80,4 +80,5 @@ html, body {
     position: absolute;
         top: 0px;
         left: 0px;
+    opacity: 0.5;
 }
