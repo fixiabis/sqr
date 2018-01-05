@@ -60,7 +60,7 @@ var square = document.getElementById("square"),
                 game.beforeActionEvent = gameEvent;
                 eventStatus.innerHTML =
                     game.actions.name[name] + " " + game.actions.type[name][type];
-                square.style.color = pre ? "lightgray" : "";
+                square.style.color = "lightgray";
             }
             return result;
         },
@@ -86,6 +86,7 @@ var square = document.getElementById("square"),
             actionName.innerHTML = actions.name[name];
             actionType.innerHTML = actions.type[name][type];
             timeRemain.style.width = "";
+            square.style.color = "";
             var timeRemainWidth = 99,
                 timeRemainAnimateTimer = setInterval(function () {
                     timeRemain.style.width = timeRemainWidth + "%";
