@@ -227,10 +227,10 @@ square.addEventListener("click", function () {
                 louderCount += game.speak.dataArray[i] > 127 ? 1 : 0;
             }
             game.event =
-                normalCount > 10 ?
-                    "speak"
-                    : louderCount > 10 ?
-                        "speakLouder"
+                louderCount > 10 ?
+                    "speakLouder"
+                    : normalCount > 10 ?
+                        "speak"
                         : game.event;
             game.actionCorrent(true);
         }, 100);
