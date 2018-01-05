@@ -66,11 +66,7 @@ var square = document.getElementById("square"),
             }
             return result;
         },
-        touch: {
-            start: { x: 0, y: 0 },
-            end: { x: 0, y: 0 },
-            point: 0
-        },
+        touch: {},
         shake: {
             start: { x: 0, y: 0, z: 0 },
             end: { x: 0, y: 0, z: 0 },
@@ -233,6 +229,6 @@ square.addEventListener("click", function () {
             game.actionCorrent(true);
         }, 100);
     }, function () {
-        game.actions.pop();
+        game.actions.name.pop();
     });
 })();
