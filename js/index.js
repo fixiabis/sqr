@@ -19,7 +19,7 @@ var square = document.getElementById("square"),
             type: [
                 ["", "use 2 fingers", "use 3 fingers"],
                 ["↑", "↓", "←", "→", "↖", "↗", "↙", "↘"],
-                [""],
+                ["", "harder"],
                 ["", "louder"]
             ],
             event: [
@@ -28,7 +28,7 @@ var square = document.getElementById("square"),
                     "swipeUp", "swipeDown", "swipeLeft", "swipeRight",
                     "swipeUpLeft", "swipeUpRight", "swipeDownLeft", "swipeDownRight"
                 ],
-                ["shake"],
+                ["shake", "shakeHarder"],
                 ["speak", "speakLouder"]
             ]
         },
@@ -82,6 +82,8 @@ var square = document.getElementById("square"),
                 type = Math.floor(Math.random() * actions.type[name].length);
                 actionId = name + "/" + type;
             } while (beforeActionId == actionId);
+            game.event = "none";
+            game.beforeActionEvent = "none";
             game.beforeActionId = actionId;
             actionName.innerHTML = actions.name[name];
             actionType.innerHTML = actions.type[name][type];
@@ -154,13 +156,14 @@ window.addEventListener("devicemotion", function (event) {
         x: Math.abs(shakeVector.x),
         y: Math.abs(shakeVector.y),
         z: Math.abs(shakeVector.z),
-    };
-    if (shakeForce.x > 4 || shakeForce.y > 4 || shakeForce > 4)
-        if (shake.init) {
-            game.event = "shake";
-            game.actionCorrent(true);
-        } else
-            shake.init = true;
+    },
+        isShake = shakeForce.x > 4 || shakeForce.y > 4 || shakeForce.z > 4,
+        isShakeHarder = shakeForce.x > 8 || shakeForce.y > 8 || shakeForce.z > 8;
+    if (shake.init) {
+        game.event = isShakeHarder ? "shakeHarder" : isShake ? "shake" : game.event;
+        game.actionCorrent(true);
+    } else
+        shake.init = true;
     shake.end.x = accel.x;
     shake.end.y = accel.y;
     shake.end.z = accel.z;
