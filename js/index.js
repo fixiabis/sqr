@@ -56,12 +56,10 @@ var square = document.getElementById("square"),
                     game.started = false;
                 } else
                     game.event = "none";
-            } else {
-                if (gameEvent == nowActionsEvent) {
-                    game.beforeActionEvent = gameEvent;
-                    eventStatus.innerHTML =
-                        game.actions.name[name] + " " + game.actions.type[name][type];
-                }
+            } else if (gameEvent == nowActionsEvent) {
+                game.beforeActionEvent = gameEvent;
+                eventStatus.innerHTML =
+                    game.actions.name[name] + " " + game.actions.type[name][type];
                 square.style.color = pre ? "lightgray" : "";
             }
             return result;
