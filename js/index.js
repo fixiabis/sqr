@@ -1,10 +1,14 @@
 var square = document.getElementById("square"),
+    eventStatus = document.getElementById("event-status"),
+    timeRemain = document.getElementById("time-remain"),
+    sound = document.getElementById("sound"),
     actionName = document.querySelector("#action-name"),
     actionType = document.querySelector("#action-type"),
     score = document.querySelector("#score"),
     game = {
         event: "none",
         beforeActionId: "-1/-1",
+        beforeActionEvent: "",
         actions: {
             name: [
                 "tap",
@@ -16,7 +20,7 @@ var square = document.getElementById("square"),
                 ["", "use 2 fingers", "use 3 fingers"],
                 ["↑", "↓", "←", "→", "↖", "↗", "↙", "↘"],
                 [""],
-                [""]
+                ["", "louder"]
             ],
             event: [
                 ["touch", "touch2", "touch3"],
@@ -25,7 +29,7 @@ var square = document.getElementById("square"),
                     "swipeUpLeft", "swipeUpRight", "swipeDownLeft", "swipeDownRight"
                 ],
                 ["shake"],
-                ["speak"]
+                ["speak", "speakLouder"]
             ]
         },
         actionCorrent: function (pre) {
@@ -33,7 +37,9 @@ var square = document.getElementById("square"),
             var beforeActionId = game.beforeActionId.split("/"),
                 name = beforeActionId[0],
                 type = beforeActionId[1],
-                result = game.event == game.actions.event[name][type];
+                nowActionsEvent = game.actions.event[name][type],
+                gameEvent = game.event,
+                result = game.beforeActionEvent == nowActionsEvent || gameEvent == nowActionsEvent;
             if (!result) {
                 if (!pre) {
                     square.style.backgroundColor = "";
@@ -48,10 +54,16 @@ var square = document.getElementById("square"),
                     score.innerHTML = "";
                     clearInterval(game.timerId);
                     game.started = false;
+                } else
+                    game.event = "none";
+            } else {
+                if (gameEvent == nowActionsEvent) {
+                    game.beforeActionEvent = gameEvent;
+                    eventStatus.innerHTML = 
+                        game.actions.name[name] + " " + game.actions.type[name][type];
                 }
-            } else
-                square.style.color = pre ? "white" : "";
-            if (!pre) game.event = "";
+                square.style.color = pre ? "lightgray" : "";
+            }
             return result;
         },
         touch: {
@@ -77,6 +89,14 @@ var square = document.getElementById("square"),
             game.beforeActionId = actionId;
             actionName.innerHTML = actions.name[name];
             actionType.innerHTML = actions.type[name][type];
+            timeRemain.style.width = "";
+            var timeRemainWidth = 99,
+                timeRemainAnimateTimer = setInterval(function () {
+                    timeRemain.style.width = timeRemainWidth + "%";
+                    timeRemainWidth--;
+                    if (timeRemain == 0)
+                        clearInterval(timeRemainAnimateTimer);
+                }, 20);
         },
         started: false
     };
@@ -159,6 +179,8 @@ square.addEventListener("click", function () {
     actionType.innerHTML = "";
     square.style.backgroundColor = "";
     square.style.color = "";
+    timeRemain.style.width = "";
+    eventStatus.innerHTML = "";
     var count = 3,
         startGame = function () {
             game.timerId = setInterval(function () {
@@ -179,23 +201,35 @@ square.addEventListener("click", function () {
             count--;
         }, 1000);
 });
-var t = 0;
 (function () {
+    var size = 256;
     game.speak.audioContext = new AudioContext();
-    game.speak.dataArray = new Uint8Array(256);
+    game.speak.dataArray = new Uint8Array(size);
     navigator.getUserMedia({ audio: true }, function (stream) {
         var context = game.speak.audioContext;
         game.speak.microphone = context.createMediaStreamSource(stream);
         game.speak.analyser = context.createAnalyser();
         game.speak.microphone.connect(game.speak.analyser);
-        game.speak.analyser.fftSize = 256;
+        game.speak.analyser.fftSize = size;
+        for (var i = 0; i < size / 2; i++) {
+            var div = document.createElement("div");
+            div.style.width = window.innerWidth / (size / 2) + "px";
+            sound.appendChild(div);
+        }
         setInterval(function () {
-            var times = 0;
+            var normalCount = 0,
+                sounds = document.querySelectorAll("#sound div");
             game.speak.analyser.getByteFrequencyData(game.speak.dataArray);
-            for (var i = 0; i < game.speak.dataArray.length; i++)
-                if (game.speak.dataArray[i] > 127)
-                    times++;
-            if (times > 10) game.event = "speak";
+            for (var i = 0; i < game.speak.dataArray.length; i++) {
+                if (i < game.speak.dataArray.length / 2)
+                    sounds[i].style.height = game.speak.dataArray[i] + 1 + "px";
+                if (game.speak.dataArray[i] > 63)
+                    normalCount++;
+            }
+            if (normalCount > 10)
+                game.event = "speak";
+            else
+                game.event = "speakLouder"
             game.actionCorrent(true);
         }, 100);
     }, function () {
