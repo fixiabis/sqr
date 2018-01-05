@@ -61,6 +61,7 @@ var square = document.getElementById("square"),
                 eventStatus.innerHTML =
                     game.actions.name[name] + " " + game.actions.type[name][type];
                 square.style.color = "lightgray";
+                navigator.vibrate(100, 0, 100);
             }
             return result;
         },
@@ -94,6 +95,7 @@ var square = document.getElementById("square"),
                     if (timeRemain == 0)
                         clearInterval(timeRemainAnimateTimer);
                 }, 20);
+            navigator.vibrate(0);
         },
         started: false
     };
