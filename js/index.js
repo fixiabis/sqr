@@ -238,7 +238,7 @@ timeRemain.style.width = "0%";
                         "speak"
                         : game.event;
             game.actionCorrent(true);
-        }, 100);
+        }, 60);
     }, function () {
         game.actions.name.pop();
     });
