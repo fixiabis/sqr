@@ -94,13 +94,15 @@ var square = document.getElementById("square"),
             actionType.innerHTML = actions.type[name][type];
             timeRemain.style.width = "";
             square.style.color = "";
-            var timeRemainWidth = 99,
-                timeRemainAnimateTimer = setInterval(function () {
-                    timeRemain.style.width = timeRemainWidth + "%";
-                    timeRemainWidth--;
-                    if (timeRemain == 0)
-                        clearInterval(timeRemainAnimateTimer);
-                }, 20);
+            if (game.timeRemainAnimateTimerId)
+                clearInterval(game.timeRemainAnimateTimerId);
+            game.timeRemainWidth = 99;
+            game.timeRemainAnimateTimerId = setInterval(function () {
+                timeRemain.style.width = game.timeRemainWidth + "%";
+                game.timeRemainWidth--;
+                if (game.timeRemainWidth == 0)
+                    clearInterval(game.timeRemainAnimateTimerId);
+            }, 20);
         },
         started: false
     };
@@ -121,6 +123,7 @@ if (location.hash == "#zh") {
         ["", "大聲點"]
     ];
 }
+timeRemain.style.width = "0%";
 window.addEventListener("contextmenu", function (event) {
     event.preventDefault();
 });
@@ -201,8 +204,7 @@ window.addEventListener("devicemotion", function (event) {
         x: Math.abs(shakeVector.x),
         y: Math.abs(shakeVector.y),
         z: Math.abs(shakeVector.z)
-    },
-        shakeForceActually = shakeForce.x ** 2 + shakeForce.y ** 2 + shakeForce.z ** 2,
+    }, shakeForceActually = shakeForce.x ** 2 + shakeForce.y ** 2 + shakeForce.z ** 2,
         isShake = shakeForceActually > 16,
         isShakeHarder = shakeForceActually > 64;
     if (shake.init) {
@@ -251,7 +253,6 @@ window.addEventListener("click", function () {
             count--;
         }, 1000);
 });
-timeRemain.style.width = "0%";
 (function () {
     var size = 256;
     game.speak.audioContext = new AudioContext();
