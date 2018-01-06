@@ -14,12 +14,14 @@ var square = document.getElementById("square"),
                 "tap",
                 "swipe",
                 "shake",
+                "turn",
                 "speak"
             ],
             type: [
                 ["", "use 2 fingers", "use 3 fingers"],
                 ["↑", "↓", "←", "→", "↖", "↗", "↙", "↘"],
                 ["", "harder"],
+                ["right", "left"],
                 ["", "louder"]
             ],
             event: [
@@ -29,6 +31,7 @@ var square = document.getElementById("square"),
                     "swipeUpLeft", "swipeUpRight", "swipeDownLeft", "swipeDownRight"
                 ],
                 ["shake", "shakeHarder"],
+                ["turnRight", "turnLeft"],
                 ["speak", "speakLouder"]
             ]
         },
@@ -159,8 +162,10 @@ window.addEventListener("deviceorientation", function (event) {
     var degree = turn.end.z - turn.start.z;
     if (Math.abs(degree) > 180)
         degree = degree + Math.sign(degree) * 360;
-    if (Math.abs(degree) > 45)
-        actionName.innerHTML = degree < 0 ? "right" : "left";
+    if (Math.abs(degree) > 15) {
+        game.event = degree < 0 ? "turnRight" : "turnLeft";
+        game.actionCorrent(true);
+    }
     turn.end.x = event.beta;
     turn.end.y = event.gamma;
     turn.end.z = event.alpha;
