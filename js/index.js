@@ -159,7 +159,7 @@ window.addEventListener("deviceorientation", function (event) {
     var degree = turn.end.z - turn.start.z;
     if (Math.abs(degree) > 180) 
         degree = degree + Math.sign(degree) * 360;
-    actionName.innerHTML = degree + "deg";
+    actionName.innerHTML = Math.floor(degree) + "deg";
     turn.end.x = event.beta;
     turn.end.y = event.gamma;
     turn.end.z = event.alpha;
