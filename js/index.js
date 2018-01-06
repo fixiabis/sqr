@@ -159,10 +159,8 @@ window.addEventListener("touchend", function (event) {
             (Math.floor(max / min) > 1 ?
                 moveLength.x > moveLength.y ?
                     swipeVector.x > 0 ? "Right" : "Left"
-                    :
-                    swipeVector.y > 0 ? "Down" : "Up"
-                :
-                (swipeVector.y > 0 ? "Down" : "Up") +
+                    : swipeVector.y > 0 ? "Down" : "Up"
+                : (swipeVector.y > 0 ? "Down" : "Up") +
                 (swipeVector.x > 0 ? "Right" : "Left")
             );
     }
@@ -200,11 +198,13 @@ window.addEventListener("devicemotion", function (event) {
         x: shake.end.x - shake.start.x,
         y: shake.end.y - shake.start.y,
         z: shake.end.z - shake.start.z
-    }, shakeForce = {
-        x: Math.abs(shakeVector.x),
-        y: Math.abs(shakeVector.y),
-        z: Math.abs(shakeVector.z)
-    }, shakeForceActually = shakeForce.x ** 2 + shakeForce.y ** 2 + shakeForce.z ** 2,
+    },
+        shakeForce = {
+            x: Math.abs(shakeVector.x),
+            y: Math.abs(shakeVector.y),
+            z: Math.abs(shakeVector.z)
+        },
+        shakeForceActually = shakeForce.x ** 2 + shakeForce.y ** 2 + shakeForce.z ** 2,
         isShake = shakeForceActually > 16,
         isShakeHarder = shakeForceActually > 64;
     if (shake.init) {
