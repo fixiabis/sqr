@@ -11,18 +11,18 @@ var square = document.getElementById("square"),
         beforeActionEvent: "",
         actions: {
             name: [
-                "tap",
-                "swipe",
-                "shake",
-                "turn",
-                "speak"
+                "點擊",
+                "滑動",
+                "搖動",
+                "轉身",
+                "講話"
             ],
             type: [
-                ["", "use 2 fingers", "use 3 fingers"],
+                ["", "用兩指", "用三指"],
                 ["↑", "↓", "←", "→", "↖", "↗", "↙", "↘"],
-                ["", "harder"],
-                ["right", "left"],
-                ["", "louder"]
+                ["", "大力點"],
+                ["→", "←"],
+                ["", "大聲點"]
             ],
             event: [
                 ["touch", "touch2", "touch3"],
@@ -104,6 +104,23 @@ var square = document.getElementById("square"),
         },
         started: false
     };
+if (location.hash = "#ch") {
+    actionName.innerHTML = "開始";
+    game.actions.name = [
+        "點擊",
+        "滑動",
+        "搖動",
+        "轉身",
+        "講話"
+    ];
+    game.actions.type = [
+        ["", "用兩指", "用三指"],
+        ["↑", "↓", "←", "→", "↖", "↗", "↙", "↘"],
+        ["", "大力點"],
+        ["→", "←"],
+        ["", "大聲點"]
+    ];
+}
 window.addEventListener("contextmenu", function (event) {
     event.preventDefault();
 });
