@@ -104,7 +104,7 @@ var square = document.getElementById("square"),
         },
         started: false
     };
-if (location.hash = "#zh") {
+if (location.hash == "#zh") {
     actionName.innerHTML = "開始";
     game.actions.name = [
         "點擊",
