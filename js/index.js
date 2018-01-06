@@ -64,10 +64,14 @@ var square = document.getElementById("square"),
             }
             return result;
         },
+        turn: {
+            start: {},
+            end: {}
+        },
         touch: {},
         shake: {
-            start: { x: 0, y: 0, z: 0 },
-            end: { x: 0, y: 0, z: 0 },
+            start: {},
+            end: {},
             init: false
         },
         speak: {},
@@ -141,6 +145,17 @@ window.addEventListener("touchend", function (event) {
     }
     game.actionCorrent(true);
 });
+window.addEventListener("deviceorientation", function (event) {
+    if (location.hash != "#testmode") return;
+    var turn = game.turn;
+    turn.end.x = event.alpha;
+    turn.end.y = event.beta;
+    turn.end.z = event.gamma;
+    actionName.innerHTML = "<font style=\"font-size: 20px\">" +
+        Math.floor(event.alpha) + "," +
+        Math.floor(event.beta) + "," +
+        Math.floor(event.gamma) + "</font>";
+});
 window.addEventListener("devicemotion", function (event) {
     var accel = event.accelerationIncludingGravity,
         shake = game.shake;
@@ -154,10 +169,11 @@ window.addEventListener("devicemotion", function (event) {
     }, shakeForce = {
         x: Math.abs(shakeVector.x),
         y: Math.abs(shakeVector.y),
-        z: Math.abs(shakeVector.z),
+        z: Math.abs(shakeVector.z)
     },
-        isShake = shakeForce.x > 4 || shakeForce.y > 4 || shakeForce.z > 4,
-        isShakeHarder = shakeForce.x > 8 || shakeForce.y > 8 || shakeForce.z > 8;
+        shakeForceActually = shakeForce.x ** 2 + shakeForce.y ** 2 + shakeForce.z ** 2,
+        isShake = shakeForceActually > 16,
+        isShakeHarder = shakeForceActually > 64;
     if (shake.init) {
         game.event =
             isShakeHarder ?
