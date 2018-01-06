@@ -148,13 +148,21 @@ window.addEventListener("touchend", function (event) {
 window.addEventListener("deviceorientation", function (event) {
     if (location.hash != "#testmode") return;
     var turn = game.turn;
-    turn.end.x = event.alpha;
-    turn.end.y = event.beta;
-    turn.end.z = event.gamma;
-    actionName.innerHTML = "<font style=\"font-size: 20px\">" +
-        Math.floor(event.alpha) + "," +
-        Math.floor(event.beta) + "," +
-        Math.floor(event.gamma) + "</font>";
+    turn.start.x = event.beta;
+    turn.start.y = event.gamma;
+    turn.start.z = event.alpha;
+    if (turn.init) {
+        turn.end.x = event.beta;
+        turn.end.y = event.gamma;
+        turn.end.z = event.alpha;
+    }
+    var degree = turn.end.z - turn.start.z;
+    if (Math.abs(degree) > 180) 
+        degree = degree + Math.sign(degree) * 360;
+    actionName.innerHTML = degree + "deg";
+    turn.end.x = event.beta;
+    turn.end.y = event.gamma;
+    turn.end.z = event.alpha;
 });
 window.addEventListener("devicemotion", function (event) {
     var accel = event.accelerationIncludingGravity,
