@@ -49,11 +49,11 @@ var square = document.getElementById("square"),
                     square.style.color = "";
                     square.style.color = "white";
                     square.style.backgroundColor = "black";
-                    actionName.innerHTML = "again?";
+                    actionName.innerHTML = location.hash == "#zh" ? "重來" : "again?";
                     actionName.style.lineHeight = "";
                     actionName.style.fontSize = "";
                     actionName.style.height = "";
-                    actionType.innerHTML = "score:" + score.innerHTML;
+                    actionType.innerHTML = (location.hash == "#zh" ? "分數" : "score") + ":" + score.innerHTML;
                     score.innerHTML = "";
                     clearInterval(game.timerId);
                     game.started = false;
@@ -222,7 +222,7 @@ window.addEventListener("devicemotion", function (event) {
 window.addEventListener("click", function () {
     if (game.started) return;
     game.started = true;
-    actionName.innerHTML = "ready?";
+    actionName.innerHTML = location.hash == "#zh" ? "預備" : "ready?";
     actionName.style.lineHeight = "50px";
     actionName.style.fontSize = "20px";
     actionName.style.height = "50px";
