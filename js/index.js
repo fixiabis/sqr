@@ -10,13 +10,7 @@ var square = document.getElementById("square"),
         beforeActionId: "-1/-1",
         beforeActionEvent: "",
         actions: {
-            name: [
-                "tap",
-                "swipe",
-                "shake",
-                "turn",
-                "speak"
-            ],
+            name: ["tap", "swipe", "shake", "turn", "speak"],
             type: [
                 ["", "use two fingers", "use three fingers"],
                 ["↑", "↓", "←", "→", "↖", "↗", "↙", "↘"],
@@ -108,13 +102,7 @@ var square = document.getElementById("square"),
     };
 if (location.hash == "#zh") {
     actionName.innerHTML = "開始";
-    game.actions.name = [
-        "點擊",
-        "滑動",
-        "搖動",
-        "轉身",
-        "講話"
-    ];
+    game.actions.name = ["點擊", "滑動", "搖動", "轉身", "講話"];
     game.actions.type = [
         ["", "用兩指", "用三指"],
         ["↑", "↓", "←", "→", "↖", "↗", "↙", "↘"],
