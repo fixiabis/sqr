@@ -202,11 +202,7 @@ window.addEventListener("devicemotion", function (event) {
     shake.end.y = accel.y;
     shake.end.z = accel.z;
 });
-window.addEventListener("click", function(){
-    if (location.hash == "#debug")
-        eval(prompt("debug"));
-});
-square.addEventListener("click", function () {
+window.addEventListener("click", function () {
     if (game.started) return;
     game.started = true;
     actionName.innerHTML = "ready?";
