@@ -203,7 +203,7 @@ window.addEventListener("devicemotion", function (event) {
     shake.end.z = accel.z;
 });
 window.addEventListener("click", function(){
-    if (location.hash == "debug")
+    if (location.hash == "#debug")
         eval(prompt("debug"));
 });
 square.addEventListener("click", function () {
