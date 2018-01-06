@@ -149,7 +149,6 @@ window.addEventListener("touchend", function (event) {
     game.actionCorrent(true);
 });
 window.addEventListener("deviceorientation", function (event) {
-    if (location.hash != "#testmode") return;
     var turn = game.turn;
     turn.start.x = event.beta;
     turn.start.y = event.gamma;
