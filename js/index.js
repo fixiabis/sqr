@@ -11,18 +11,18 @@ var square = document.getElementById("square"),
         beforeActionEvent: "",
         actions: {
             name: [
-                "點擊",
-                "滑動",
-                "搖動",
-                "轉身",
-                "講話"
+                "tap",
+                "swipe",
+                "shake",
+                "turn",
+                "speak"
             ],
             type: [
-                ["", "用兩指", "用三指"],
+                ["", "use two fingers", "use three fingers"],
                 ["↑", "↓", "←", "→", "↖", "↗", "↙", "↘"],
-                ["", "大力點"],
+                ["", "harder"],
                 ["→", "←"],
-                ["", "大聲點"]
+                ["", "louder"]
             ],
             event: [
                 ["touch", "touch2", "touch3"],
