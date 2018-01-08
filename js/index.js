@@ -30,8 +30,6 @@ var square = document.getElementById("square"),
             ]
         },
         actionCorrent: function (pre) {
-            if (game.event.search("turn") > -1)
-                eventStatus.innerHTML = game.event;
             if (!game.started || game.beforeActionId == "-1/-1") return;
             var beforeActionId = game.beforeActionId.split("/"),
                 name = beforeActionId[0],
@@ -172,10 +170,10 @@ window.addEventListener("deviceorientation", function (event) {
         degree = degree - Math.sign(degree) * 360;
     if (Math.abs(degree) > 5) {
         game.event = degree < 0 ? "turnLeft" : "turnRight";
-        game.event = "turn:" +
+        eventStatus.innerHTML = "turn:" +
             Math.floor(event.beta) + "," +
             Math.floor(event.gamma) + "," +
-            Math.abs(event.alpha);
+            Math.floor(event.alpha);
         game.actionCorrent(true);
     }
     turn.end.x = event.beta;
