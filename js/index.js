@@ -55,8 +55,8 @@ var square = document.getElementById("square"),
                     game.event = "none";
             } else if (gameEvent == nowActionsEvent) {
                 game.beforeActionEvent = gameEvent;
-                eventStatus.innerHTML =
-                    game.actions.name[name] + " " + game.actions.type[name][type];
+                eventStatus.innerHTML = nowActionsEvent;
+                game.actions.name[name] + " " + game.actions.type[name][type];
                 square.style.color = "lightgray";
             }
             return result;
