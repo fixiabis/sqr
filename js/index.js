@@ -167,9 +167,9 @@ window.addEventListener("deviceorientation", function (event) {
     }
     var degree = turn.end.z - turn.start.z;
     if (Math.abs(degree) > 180)
-        degree = degree + Math.sign(degree) * 360;
+        degree = degree - Math.sign(degree) * 360;
     if (Math.abs(degree) > 5) {
-        game.event = degree < 0 ? "turnRight" : "turnLeft";
+        game.event = degree < 0 ? "turnLeft" : "turnRight";
         game.actionCorrent(true);
     }
     turn.end.x = event.beta;
