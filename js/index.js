@@ -169,10 +169,7 @@ window.addEventListener("deviceorientation", function (event) {
         degree = degree - Math.sign(degree) * 360;
     if (Math.abs(degree) > 5) {
         game.event = degree < 0 ? "turnLeft" : "turnRight";
-        eventStatus.innerHTML = "turn:" +
-            Math.floor(event.beta) + "," +
-            Math.floor(event.gamma) + "," +
-            Math.floor(event.alpha);
+        eventStatus.innerHTML = "turn:" + Math.floor(event.gamma);
         game.actionCorrent(true);
     }
     turn.end.x = event.beta;
