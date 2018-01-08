@@ -50,18 +50,6 @@ html, body {
     line-height: 200px;
     height: 100%;
 }
-#sound {
-    width: 100%;
-    height: 256px;
-    position: absolute;
-        bottom: 0px;
-        left: 0px;
-    transform: rotateX(180deg);
-}
-#sound div {
-    background: lightgray;
-    float: left;
-}
 #event-status {
     text-indent: 25px;
     line-height: 50px;

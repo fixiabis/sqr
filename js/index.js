@@ -1,7 +1,6 @@
 var square = document.getElementById("square"),
     eventStatus = document.getElementById("event-status"),
     timeRemain = document.getElementById("time-remain"),
-    sound = document.getElementById("sound"),
     actionName = document.querySelector("#action-name"),
     actionType = document.querySelector("#action-type"),
     score = document.querySelector("#score"),
@@ -255,19 +254,11 @@ window.addEventListener("click", function () {
         game.speak.analyser = context.createAnalyser();
         game.speak.microphone.connect(game.speak.analyser);
         game.speak.analyser.fftSize = size;
-        for (var i = 0; i < size / 2; i++) {
-            var div = document.createElement("div");
-            div.style.width = window.innerWidth / (size / 2) + "px";
-            sound.appendChild(div);
-        }
         setInterval(function () {
             var normalCount = 0,
-                louderCount = 0,
-                sounds = document.querySelectorAll("#sound div");
+                louderCount = 0;
             game.speak.analyser.getByteFrequencyData(game.speak.dataArray);
             for (var i = 0; i < game.speak.dataArray.length; i++) {
-                if (i < game.speak.dataArray.length / 2)
-                    sounds[i].style.height = game.speak.dataArray[i] + 1 + "px";
                 normalCount += game.speak.dataArray[i] > 63 ? 1 : 0;
                 louderCount += game.speak.dataArray[i] > 127 ? 1 : 0;
             }
