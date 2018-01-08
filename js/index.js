@@ -30,6 +30,7 @@ var square = document.getElementById("square"),
             ]
         },
         actionCorrent: function (pre) {
+            eventStatus.innerHTML = game.event;
             if (!game.started || game.beforeActionId == "-1/-1") return;
             var beforeActionId = game.beforeActionId.split("/"),
                 name = beforeActionId[0],
@@ -59,7 +60,6 @@ var square = document.getElementById("square"),
                     game.actions.name[name] + " " + game.actions.type[name][type];
                 square.style.color = "lightgray";
             }
-            eventStatus.innerHTML = nowActionsEvent;
             return result;
         },
         turn: {
